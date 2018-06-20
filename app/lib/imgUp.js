@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 // Upload food image to Imgur
 module.exports = (rawImg)=>{
   return new Promise((resolve, reject)=>{
-    if(rawImg === undefined){
+    if(rawImg === undefined || rawImg.substring(5,10) !== 'image'){
       resolve(undefined);
     }
     else{

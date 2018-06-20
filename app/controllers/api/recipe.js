@@ -5,7 +5,6 @@ const imgUp = require('lib/imgUp');
 
 exports.create = (req, res, next) => {
     return imgUp(req.body.foodPic).then((picUrl)=>{
-        console.log(picUrl);
         req.body.foodPic = picUrl;
         return exports.checkExistingRecipe(req.body.name)
     }).then(() => {
