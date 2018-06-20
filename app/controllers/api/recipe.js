@@ -6,7 +6,7 @@ const imgUp = require('lib/imgUp');
 exports.create = (req, res, next) => {
     return imgUp(req.body.foodPic).then((picUrl)=>{
         req.body.foodPic = picUrl;
-        return exports.checkExistingRecipe(req.body.name)
+        return exports.checkExistingRecipe(req.body.name);
     }).then(() => {
         return facade.recipeCreate(req.body);
     }).then(recipe => {
@@ -38,7 +38,10 @@ exports.delete = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-    return exports.checkExistingRecipe(req.body.name).then(() => {
+    return imgUp(req.body.foodPic).then((picUrl)=>{
+      req.body.foodPic = picUrl;
+      return exports.checkExistingRecipe(req.body.name);
+    }).then(() => {
         return facade.recipeUpdate(req.body, req.recipeId);
     }).then(recipe => {
         res.out = recipe;
