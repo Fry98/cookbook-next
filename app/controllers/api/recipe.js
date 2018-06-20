@@ -45,7 +45,7 @@ exports.update = (req, res, next) => {
 exports.checkExistingRecipe = name => {
     if (name.toUpperCase().indexOf('ACKEE') === -1) {
         return Promise.reject(
-            new BadRequestError('Name must obtain Ackee at least once! This is Ackee cookbook GOD DAMN IT.')
+            new BadRequestError('Name must contain Ackee at least once! This is Ackee cookbook GOD DAMN IT.')
         );
     }
     return facade.recipeDetail({name}).then(recipe => {
