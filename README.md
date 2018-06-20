@@ -3,10 +3,10 @@
 Welcome! Wanna join [Ackee][1]? Or you just don't know what to do on a lazy sunday afternoon?
 
 Here is a task for you! Enhance our Node.js backend app for delicious ackee recipes. You can:
-- Add more endpoints
+- Add more endpoints ✔
 - Refactor the current ones
 - Add discussions under recipes
-- Link to a 3rd party API
+- Link to a 3rd party API ✔
 
 It should take you around 2-4 hours to complete.
 

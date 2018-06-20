@@ -17,6 +17,7 @@ router.param('recipeId', function(req, res, next, id) {
 router.get('/recipes/:recipeId', recipe.detail);
 router.get('/recipes', recipe.list);
 router.delete('/recipes/:recipeId', recipe.delete);
+router.delete('/recipes', facade.recipePurge);
 router.put('/recipes/:recipeId', recipe.update);
 router.post('/recipes', fieldChecker.bodyMandatory(['name', 'description']), recipe.create);
 router.post('/recipes/:recipeId/ratings', fieldChecker.bodyMandatory(['score']), rating.create);
