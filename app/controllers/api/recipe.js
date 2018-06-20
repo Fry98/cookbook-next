@@ -1,9 +1,14 @@
 const facade = require('facade/facade');
 const ValidationError = require('errors/ValidationError');
 const BadRequestError = require('errors/BadRequestError');
+const imgUp = require('lib/imgUp');
 
 exports.create = (req, res, next) => {
-    return exports.checkExistingRecipe(req.body.name).then(() => {
+    return imgUp(req.body.foodPic).then((picUrl)=>{
+        console.log(picUrl);
+        req.body.foodPic = picUrl;
+        return exports.checkExistingRecipe(req.body.name)
+    }).then(() => {
         return facade.recipeCreate(req.body);
     }).then(recipe => {
         res.out = recipe;
