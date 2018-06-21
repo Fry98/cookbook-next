@@ -20,11 +20,11 @@ router.get('/recipes', recipe.list);
 router.get('/list/:name', list.listOut);
 router.delete('/recipes/:recipeId', recipe.delete);
 router.delete('/recipes', facade.recipePurge);
-// router.delete('/list/:name', list.removeItem);
-// router.delete('/list', list.removeList);
+router.delete('/list/:name/:item', list.removeItem);
+router.delete('/list/:name', list.removeList);
 router.put('/recipes/:recipeId', recipe.update);
 router.post('/recipes', fieldChecker.bodyMandatory(['name', 'description']), recipe.create);
 router.post('/recipes/:recipeId/ratings', fieldChecker.bodyMandatory(['score']), rating.create);
-// router.post('/list/:name', list.addItem);
+router.post('/list/:name', list.addItem);
 
 module.exports = router;
