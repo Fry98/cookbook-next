@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Recipe = mongoose.model('Recipe');
 const Rating = mongoose.model('Rating');
+const List = require('models/mongo/list');
 
 const NotFoundError = require('errors/NotFoundError');
 const _ = require('lodash');
@@ -39,7 +40,9 @@ exports.recipeDelete = id => {
 };
 
 exports.recipePurge = () => {
-    return Recipe.removeAsync({});
+    return Recipe.removeAsync({}).then(()=>{
+      List.collection.drop();
+    });
 };
 
 exports.ratingCreate = object => {

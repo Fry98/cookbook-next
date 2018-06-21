@@ -5,7 +5,8 @@ const recipeSchema = new Schema({
     name: {type: String, unique: true, required: true},
     description: {type: String, required: true},
     ingredients: [{type: String}],
-    foodPic: String
+    foodPic: String,
+    discussion: Array
 });
 
 recipeSchema.options.toJSON = {

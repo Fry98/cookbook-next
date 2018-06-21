@@ -5,7 +5,7 @@ const List = require('models/mongo/list');
 exports.listOut = (req, res, next) => {
   List.findOne({name: req.params.name}, (err, doc)=>{
     if(doc === null){
-      res.statusCode = 404;
+      res.status(404);
       res.out = {"status": 404, "description": "Requested list not found"};
       return next();
     }
@@ -25,11 +25,12 @@ exports.listOut = (req, res, next) => {
 exports.removeList = (req, res, next) => {
   List.findOneAndRemove({name: req.params.name}, (err, doc)=>{
     if(doc === null){
-      res.statusCode = 404;
+      res.status(404);
       res.out = {"status": 404, "description": "Requested list not found"};
     }
     else{
-      res.statusCode = 204;
+      res.out = {};
+      res.status(204);
     }
     return next();
   });
@@ -38,7 +39,7 @@ exports.removeList = (req, res, next) => {
 exports.addItem = (req, res, next) => {
   Recipe.findById(req.body.recipe, (err, recDoc)=>{
     if(recDoc == null){
-      res.statusCode = 404;
+      res.status(404);
       res.out = {"status": 404, "description": "Recipe not found"};
       return next();
     }
@@ -52,10 +53,18 @@ exports.addItem = (req, res, next) => {
           newList.save();
         }
         else{
-          lisDoc.recipes.set(lisDoc.recipes.length, req.body.recipe);
-          lisDoc.save();
+          if(!lisDoc.recipes.includes(req.body.recipe)){
+            lisDoc.recipes.set(lisDoc.recipes.length, req.body.recipe);
+            lisDoc.save();
+          }
+          else{
+            res.out = {"status": 409, "description": "Recipe already in the list"};
+            res.status(409);
+            return next();
+          }
         }
-        res.statusCode = 204;
+        res.out = {};
+        res.status(204);
         return next();
       });
     }
@@ -65,13 +74,13 @@ exports.addItem = (req, res, next) => {
 exports.removeItem = (req, res, next) => {
   List.findOne({name: req.params.name}, (err, doc)=>{
     if(doc === null){
-      res.statusCode = 404;
+      res.status(404);
       res.out = {"status": 404, "description": "Requested list not found"};
     }
     else{
       let idx = doc.recipes.indexOf(req.params.item);
       if(idx === -1){
-        res.statusCode = 404;
+        res.status(404);
         res.out = {"status": 404, "description": "Recipe not found in the list"};
         return next();
       }
@@ -82,7 +91,8 @@ exports.removeItem = (req, res, next) => {
       else{
         doc.save();
       }
-      res.statusCode = 204;
+      res.out = {};
+      res.status(204);
     }
     return next();
   });
