@@ -1,37 +1,76 @@
-# Ackee Cookbook Node.js
+# Ackee Cookbook Next
+## So what's did I add?
+### **1)** Added the option to add food images to recipes
+Images are uploaded to Imgur using 3rd party API; **MongoDB** then stores only the image ID
 
-Welcome! Wanna join [Ackee][1]? Or you just don't know what to do on a lazy sunday afternoon?
+*(Upload requires **Imgur API token** stored in the enviroment variable ```IMGUR_TOKEN```)*
+- Create a new recipe
 
-Here is a task for you! Enhance our Node.js backend app for delicious ackee recipes. You can:
-- Add more endpoints ✔
-- Refactor the current ones
-- Add discussions under recipes
-- Link to a 3rd party API ✔
+  ```POST https://localhost:3000/api/v1/recipes```
 
-It should take you around 2-4 hours to complete.
+  ```js
+  {
+    "name": "Ackee Lorem Ipsum",
+    "foodPic": imageDataInBase64
+  }
+  ```
 
-## How to run
+- Update existing recipe
 
-run command "npm install"
+  ```PUT https://localhost:3000/api/v1/recipes/:recipeId```
+  ```js
+  {
+    "name": "Ackee Lorem Ipsum",
+    "foodPic": imageDataInBase64
+  }
+  ```
+### **2)** Added the option to purge all recipes
+- Purge all the recipes
 
-after it finished, set NODE_PATH=./app:./config or if you are on Windows NODE_PATH=./app;./config
+  ```DELETE https://localhost:3000/api/v1/recipes```
 
-setup your MongoDB database, this is setting we use with mongoose : mongodb://localhost:27017/cookbook
+### **3)** Create custom recipe lists
+- Recieve all the recipes in the list
 
-You can change it in app/config/env-default
+  ```GET https://localhost:3000/api/v1/list/:listName```
 
-Then you can run it with "node --max-old-space-size=128 --harmony_default_parameters server.js ./app;./config"
+- Create list or add recipe
 
-You can use our "Mongol" db which could be found in production environment but please setup your own DB :)
+  ```POST https://localhost:3000/api/v1/list/:listName```  
+  ```js
+  {
+    "recipe": recipeId
+  }
+  ```
+  When list with the given ```listName``` already exists it is updated with the new recipe. Otherwise new list with the given name is created.
 
-Or you can set up your Webstrom environment
+- Remove a list
 
-![Image][image-1]
+  ```DELETE https://localhost:3000/api/v1/list/:listName```
 
-[image-1]: https://github.com/AckeeCZ/cookbook-rest-api/raw/master/raw/settings.png
+- Remove item from a list
 
-## API Documentation
+  ```DELETE https://localhost:3000/api/v1/list/:listName/:recipeId```
 
-Current API Documentation can be bound on APIARY [https://app.apiary.io/cookbook3/editor]
+  *(If there is no recipe left in the list after the deletion the whole list is removed)*
 
-[1]:	https://ackee.cz
+### **4)** Added discussions for the recipes
+- Get all the comments
+
+  ```GET https://localhost:3000/api/v1/recipes/:recipeId/discussion```
+
+- Add a new comment
+
+  ```POST https://localhost:3000/api/v1/recipes/:recipeId/discussion```
+  ```js
+  {
+    "nick": "Mr. Placeholder",
+    "comment": "This recipe is really dope yo!"
+  }
+  ```
+
+- Remove a comment from the discussion
+
+  ```DELETE https://localhost:3000/api/v1/recipes/:recipeId/discussion/:commentId```
+
+  *(```commentId``` is the index of the comment in an array)*
