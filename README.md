@@ -1,5 +1,5 @@
 # Ackee Cookbook Next
-## So what's did I add?
+## So what did I add?
 ### **1)** Added the option to add food images to recipes
 Images are uploaded to Imgur using 3rd party API; **MongoDB** then stores only the image ID
 
@@ -30,7 +30,7 @@ Images are uploaded to Imgur using 3rd party API; **MongoDB** then stores only t
   ```DELETE https://localhost:3000/api/v1/recipes```
 
 ### **3)** Create custom recipe lists
-- Recieve all the recipes in the list
+- Get all the recipes in the list
 
   ```GET https://localhost:3000/api/v1/list/:listName```
 
@@ -42,7 +42,7 @@ Images are uploaded to Imgur using 3rd party API; **MongoDB** then stores only t
     "recipe": recipeId
   }
   ```
-  When list with the given ```listName``` already exists it is updated with the new recipe. Otherwise new list with the given name is created.
+  When the list with the given ```listName``` already exists, it is updated with the new recipe. Otherwise, a new list with the given name is created.
 
 - Remove a list
 
@@ -52,7 +52,7 @@ Images are uploaded to Imgur using 3rd party API; **MongoDB** then stores only t
 
   ```DELETE https://localhost:3000/api/v1/list/:listName/:recipeId```
 
-  *(If there is no recipe left in the list after the deletion the whole list is removed)*
+  *(If there is no recipe left in the list after the deletion, the whole list is removed)*
 
 ### **4)** Added discussions for the recipes
 - Get all the comments
